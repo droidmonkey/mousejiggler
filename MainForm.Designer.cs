@@ -32,10 +32,11 @@ namespace ArkaneSystems.MouseJiggle
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.jiggleTimer = new System.Windows.Forms.Timer(this.components);
             this.cbEnabled = new System.Windows.Forms.CheckBox();
-            this.cmdAbout = new System.Windows.Forms.Button();
-            this.cbZenJiggle = new System.Windows.Forms.CheckBox();
             this.cmdToTray = new System.Windows.Forms.Button();
             this.nifMin = new System.Windows.Forms.NotifyIcon(this.components);
+            this.intervalUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.intervalUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // jiggleTimer
@@ -48,37 +49,16 @@ namespace ArkaneSystems.MouseJiggle
             this.cbEnabled.AutoSize = true;
             this.cbEnabled.Location = new System.Drawing.Point(13, 13);
             this.cbEnabled.Name = "cbEnabled";
-            this.cbEnabled.Size = new System.Drawing.Size(92, 17);
+            this.cbEnabled.Size = new System.Drawing.Size(86, 17);
             this.cbEnabled.TabIndex = 0;
-            this.cbEnabled.Text = "Enable jiggle?";
+            this.cbEnabled.Text = "Enable jiggle";
             this.cbEnabled.UseVisualStyleBackColor = true;
             this.cbEnabled.CheckedChanged += new System.EventHandler(this.cbEnabled_CheckedChanged);
-            // 
-            // cmdAbout
-            // 
-            this.cmdAbout.Location = new System.Drawing.Point(111, 7);
-            this.cmdAbout.Name = "cmdAbout";
-            this.cmdAbout.Size = new System.Drawing.Size(33, 23);
-            this.cmdAbout.TabIndex = 1;
-            this.cmdAbout.Text = "?";
-            this.cmdAbout.UseVisualStyleBackColor = true;
-            this.cmdAbout.Click += new System.EventHandler(this.cmdAbout_Click);
-            // 
-            // cbZenJiggle
-            // 
-            this.cbZenJiggle.AutoSize = true;
-            this.cbZenJiggle.Location = new System.Drawing.Point(25, 36);
-            this.cbZenJiggle.Name = "cbZenJiggle";
-            this.cbZenJiggle.Size = new System.Drawing.Size(78, 17);
-            this.cbZenJiggle.TabIndex = 2;
-            this.cbZenJiggle.Text = "Zen jiggle?";
-            this.cbZenJiggle.UseVisualStyleBackColor = true;
-            this.cbZenJiggle.CheckedChanged += new System.EventHandler(this.cbZenJiggle_CheckedChanged);
             // 
             // cmdToTray
             // 
             this.cmdToTray.Image = ((System.Drawing.Image)(resources.GetObject("cmdToTray.Image")));
-            this.cmdToTray.Location = new System.Drawing.Point(111, 32);
+            this.cmdToTray.Location = new System.Drawing.Point(111, 7);
             this.cmdToTray.Name = "cmdToTray";
             this.cmdToTray.Size = new System.Drawing.Size(33, 23);
             this.cmdToTray.TabIndex = 3;
@@ -91,14 +71,47 @@ namespace ArkaneSystems.MouseJiggle
             this.nifMin.Text = "Mouse Jiggler";
             this.nifMin.DoubleClick += new System.EventHandler(this.nifMin_DoubleClick);
             // 
+            // intervalUpDown
+            // 
+            this.intervalUpDown.Location = new System.Drawing.Point(13, 37);
+            this.intervalUpDown.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.intervalUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.intervalUpDown.Name = "intervalUpDown";
+            this.intervalUpDown.Size = new System.Drawing.Size(43, 20);
+            this.intervalUpDown.TabIndex = 4;
+            this.intervalUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.intervalUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.intervalUpDown.ValueChanged += new System.EventHandler(this.intervalUpDown_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(63, 43);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(67, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Interval (min)";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(156, 59);
+            this.ClientSize = new System.Drawing.Size(156, 70);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.intervalUpDown);
             this.Controls.Add(this.cmdToTray);
-            this.Controls.Add(this.cbZenJiggle);
-            this.Controls.Add(this.cmdAbout);
             this.Controls.Add(this.cbEnabled);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -107,6 +120,7 @@ namespace ArkaneSystems.MouseJiggle
             this.Name = "MainForm";
             this.Text = "MouseJiggle";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.intervalUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,10 +130,10 @@ namespace ArkaneSystems.MouseJiggle
 
         private System.Windows.Forms.Timer jiggleTimer;
         private System.Windows.Forms.CheckBox cbEnabled;
-        private System.Windows.Forms.Button cmdAbout;
-        private System.Windows.Forms.CheckBox cbZenJiggle;
         private System.Windows.Forms.Button cmdToTray;
         private System.Windows.Forms.NotifyIcon nifMin;
+        private System.Windows.Forms.NumericUpDown intervalUpDown;
+        private System.Windows.Forms.Label label1;
     }
 }
 

@@ -24,85 +24,55 @@ namespace ArkaneSystems.MouseJiggle
 
         protected bool zig = true;
 
-        public MainForm ()
+        public MainForm()
         {
-            this.InitializeComponent ();
+            this.InitializeComponent();
         }
 
-        private void jiggleTimer_Tick (object sender, EventArgs e)
+        private void jiggleTimer_Tick(object sender, EventArgs e)
         {
-            // jiggle
-            if (this.cbZenJiggle.Checked)
-                Jiggler.Jiggle (0, 0);
-            else
+            if (this.zig)
             {
-                if (this.zig)
-                    Jiggler.Jiggle (4, 4);
-                else // zag
-                {
-                    // I really don't know why this needs to be less to stay in the same
-                    // place; if I was likely to use it again, then I'd worry.
-                    Jiggler.Jiggle (-4, -4);
-                }
+                Jiggler.Jiggle(4, 4);
+                this.jiggleTimer.Interval = 500;
+            }
+            else // zag
+            {
+                // I really don't know why this needs to be less to stay in the same
+                // place; if I was likely to use it again, then I'd worry.
+                Jiggler.Jiggle(-4, -4);
+                this.jiggleTimer.Interval = Program.JiggleInterval * 60 * 1000;
             }
 
             this.zig = !this.zig;
         }
 
-        private void cbEnabled_CheckedChanged (object sender, EventArgs e)
+        private void updateJiggleTimer()
         {
+            this.jiggleTimer.Interval = Program.JiggleInterval * 60 * 1000;
+        }
+
+        private void cbEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            updateJiggleTimer();
             this.jiggleTimer.Enabled = this.cbEnabled.Checked;
         }
 
-        private void cmdAbout_Click (object sender, EventArgs e)
+        private void cmdAbout_Click(object sender, EventArgs e)
         {
-            using (var a = new AboutBox ())
-                a.ShowDialog ();
+            using (var a = new AboutBox())
+                a.ShowDialog();
         }
 
-        private void MainForm_Load (object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            try
-            {
-                RegistryKey key = Registry.CurrentUser.CreateSubKey (@"Software\Arkane Systems\MouseJiggle",
-                                                                     RegistryKeyPermissionCheck.ReadWriteSubTree);
-                var zen = (int) key.GetValue ("ZenJiggleEnabled", 0);
-
-                if (zen == 0)
-                    this.cbZenJiggle.Checked = false;
-                else
-                    this.cbZenJiggle.Checked = true;
-            }
-            catch (Exception)
-            {
-                // Ignore any problems - non-critical operation.
-            }
-
-            if (Program.ZenJiggling)
-                this.cbZenJiggle.Checked = true;
-
             if (Program.StartJiggling)
                 this.cbEnabled.Checked = true;
 
             if (Program.StartMinimized)
                 this.cmdToTray_Click(this, null);
-        }
 
-        private void cbZenJiggle_CheckedChanged (object sender, EventArgs e)
-        {
-            try
-            {
-                RegistryKey key = Registry.CurrentUser.CreateSubKey (@"Software\Arkane Systems\MouseJiggle",
-                                                                     RegistryKeyPermissionCheck.ReadWriteSubTree);
-                if (this.cbZenJiggle.Checked)
-                    key.SetValue ("ZenJiggleEnabled", 1);
-                else
-                    key.SetValue ("ZenJiggleEnabled", 0);
-            }
-            catch (Exception)
-            {
-                // Ignore any problems - non-critical operation.
-            }
+            this.intervalUpDown.Value = Program.JiggleInterval;
         }
 
         private void cmdToTray_Click (object sender, EventArgs e)
@@ -117,7 +87,7 @@ namespace ArkaneSystems.MouseJiggle
             this.nifMin.Visible = true;
         }
 
-        private void nifMin_DoubleClick (object sender, EventArgs e)
+        private void nifMin_DoubleClick(object sender, EventArgs e)
         {
             // restore the window
             this.Visible = true;
@@ -127,6 +97,12 @@ namespace ArkaneSystems.MouseJiggle
 
             // hide tray icon
             this.nifMin.Visible = false;
+        }
+
+        private void intervalUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            Program.JiggleInterval = (int) ((NumericUpDown)sender).Value;
+            updateJiggleTimer();
         }
     }
 }
