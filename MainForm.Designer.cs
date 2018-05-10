@@ -31,11 +31,12 @@ namespace ArkaneSystems.MouseJiggle
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.jiggleTimer = new System.Windows.Forms.Timer(this.components);
-            this.cbEnabled = new System.Windows.Forms.CheckBox();
+            this.cbEnableJiggle = new System.Windows.Forms.CheckBox();
             this.cmdToTray = new System.Windows.Forms.Button();
             this.nifMin = new System.Windows.Forms.NotifyIcon(this.components);
             this.intervalUpDown = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbKeepScreenOn = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.intervalUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,21 +45,21 @@ namespace ArkaneSystems.MouseJiggle
             this.jiggleTimer.Interval = 1000;
             this.jiggleTimer.Tick += new System.EventHandler(this.jiggleTimer_Tick);
             // 
-            // cbEnabled
+            // cbEnableJiggle
             // 
-            this.cbEnabled.AutoSize = true;
-            this.cbEnabled.Location = new System.Drawing.Point(13, 13);
-            this.cbEnabled.Name = "cbEnabled";
-            this.cbEnabled.Size = new System.Drawing.Size(86, 17);
-            this.cbEnabled.TabIndex = 0;
-            this.cbEnabled.Text = "Enable jiggle";
-            this.cbEnabled.UseVisualStyleBackColor = true;
-            this.cbEnabled.CheckedChanged += new System.EventHandler(this.cbEnabled_CheckedChanged);
+            this.cbEnableJiggle.AutoSize = true;
+            this.cbEnableJiggle.Location = new System.Drawing.Point(12, 30);
+            this.cbEnableJiggle.Name = "cbEnableJiggle";
+            this.cbEnableJiggle.Size = new System.Drawing.Size(86, 17);
+            this.cbEnableJiggle.TabIndex = 0;
+            this.cbEnableJiggle.Text = "Enable jiggle";
+            this.cbEnableJiggle.UseVisualStyleBackColor = true;
+            this.cbEnableJiggle.CheckedChanged += new System.EventHandler(this.cbEnabledJiggle_CheckedChanged);
             // 
             // cmdToTray
             // 
             this.cmdToTray.Image = ((System.Drawing.Image)(resources.GetObject("cmdToTray.Image")));
-            this.cmdToTray.Location = new System.Drawing.Point(111, 7);
+            this.cmdToTray.Location = new System.Drawing.Point(119, 7);
             this.cmdToTray.Name = "cmdToTray";
             this.cmdToTray.Size = new System.Drawing.Size(33, 23);
             this.cmdToTray.TabIndex = 3;
@@ -73,7 +74,8 @@ namespace ArkaneSystems.MouseJiggle
             // 
             // intervalUpDown
             // 
-            this.intervalUpDown.Location = new System.Drawing.Point(13, 37);
+            this.intervalUpDown.Enabled = false;
+            this.intervalUpDown.Location = new System.Drawing.Point(12, 53);
             this.intervalUpDown.Maximum = new decimal(new int[] {
             15,
             0,
@@ -98,21 +100,33 @@ namespace ArkaneSystems.MouseJiggle
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(63, 43);
+            this.label1.Location = new System.Drawing.Point(61, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 13);
             this.label1.TabIndex = 5;
             this.label1.Text = "Interval (min)";
             // 
+            // cbKeepScreenOn
+            // 
+            this.cbKeepScreenOn.AutoSize = true;
+            this.cbKeepScreenOn.Location = new System.Drawing.Point(12, 7);
+            this.cbKeepScreenOn.Name = "cbKeepScreenOn";
+            this.cbKeepScreenOn.Size = new System.Drawing.Size(101, 17);
+            this.cbKeepScreenOn.TabIndex = 6;
+            this.cbKeepScreenOn.Text = "Keep screen on";
+            this.cbKeepScreenOn.UseVisualStyleBackColor = true;
+            this.cbKeepScreenOn.CheckedChanged += new System.EventHandler(this.cbKeepScreenOn_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(156, 70);
+            this.ClientSize = new System.Drawing.Size(156, 84);
+            this.Controls.Add(this.cbKeepScreenOn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.intervalUpDown);
             this.Controls.Add(this.cmdToTray);
-            this.Controls.Add(this.cbEnabled);
+            this.Controls.Add(this.cbEnableJiggle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -129,11 +143,12 @@ namespace ArkaneSystems.MouseJiggle
         #endregion
 
         private System.Windows.Forms.Timer jiggleTimer;
-        private System.Windows.Forms.CheckBox cbEnabled;
+        private System.Windows.Forms.CheckBox cbEnableJiggle;
         private System.Windows.Forms.Button cmdToTray;
         private System.Windows.Forms.NotifyIcon nifMin;
         private System.Windows.Forms.NumericUpDown intervalUpDown;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox cbKeepScreenOn;
     }
 }
 

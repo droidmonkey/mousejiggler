@@ -19,14 +19,13 @@ computer normally even with jiggling enabled.
 
 To minimize Mouse Jiggler to the system tray, click the button marked with a green, down-pointing arrow.
 
-If you want to start the Mouse Jiggler with jiggling already enabled, run the MouseJiggle.exe with either the
--j or --jiggle command-line switch.
+Command Line Switches
+=====================
 
-The "-i [minutes]" / "--interval [minutes]" (ie, -i 10) command-line argument allows you to set the number of minutes between jiggles.
-
-(Added in 1.5+): The "-m" / "--minimized" command-like switch tells MouseJiggler to start already minimized.
-
-That's it. Enjoy!
+ * --jiggle | -j ... start jiggling on load
+ * --interval [min] | -i [min] ... set minutes between jiggles
+ * --minimized | -m ... start minimized
+ * --screen | -s ... start with screen on enabled
 
 Features That Will Not Be Implemented
 =====================================

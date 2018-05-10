@@ -12,6 +12,7 @@
 #endregion
 
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
@@ -21,7 +22,6 @@ namespace ArkaneSystems.MouseJiggle
     public partial class MainForm : Form
     {
         private const int MOUSEMOVE = 8;
-
         protected bool zig = true;
 
         public MainForm()
@@ -38,8 +38,6 @@ namespace ArkaneSystems.MouseJiggle
             }
             else // zag
             {
-                // I really don't know why this needs to be less to stay in the same
-                // place; if I was likely to use it again, then I'd worry.
                 Jiggler.Jiggle(-4, -4);
                 this.jiggleTimer.Interval = Program.JiggleInterval * 60 * 1000;
             }
@@ -52,10 +50,11 @@ namespace ArkaneSystems.MouseJiggle
             this.jiggleTimer.Interval = Program.JiggleInterval * 60 * 1000;
         }
 
-        private void cbEnabled_CheckedChanged(object sender, EventArgs e)
+        private void cbEnabledJiggle_CheckedChanged(object sender, EventArgs e)
         {
             updateJiggleTimer();
-            this.jiggleTimer.Enabled = this.cbEnabled.Checked;
+            this.jiggleTimer.Enabled = this.cbEnableJiggle.Checked;
+            this.intervalUpDown.Enabled = this.cbEnableJiggle.Checked;
         }
 
         private void cmdAbout_Click(object sender, EventArgs e)
@@ -67,7 +66,10 @@ namespace ArkaneSystems.MouseJiggle
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (Program.StartJiggling)
-                this.cbEnabled.Checked = true;
+                this.cbEnableJiggle.Checked = true;
+
+            if (Program.StartScreenOn)
+                this.cbKeepScreenOn.Checked = true;
 
             if (Program.StartMinimized)
                 this.cmdToTray_Click(this, null);
@@ -104,5 +106,27 @@ namespace ArkaneSystems.MouseJiggle
             Program.JiggleInterval = (int) ((NumericUpDown)sender).Value;
             updateJiggleTimer();
         }
+
+        private void cbKeepScreenOn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.cbKeepScreenOn.Checked)
+                NativeMethods.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS | EXECUTION_STATE.ES_DISPLAY_REQUIRED | EXECUTION_STATE.ES_SYSTEM_REQUIRED);
+            else
+                NativeMethods.SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
+        }
+    }
+
+    public enum EXECUTION_STATE : uint
+    {
+        ES_AWAYMODE_REQUIRED = 0x00000040,
+        ES_CONTINUOUS = 0x80000000,
+        ES_DISPLAY_REQUIRED = 0x00000002,
+        ES_SYSTEM_REQUIRED = 0x00000001
+    }
+
+    internal class NativeMethods
+    {
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern EXECUTION_STATE SetThreadExecutionState(EXECUTION_STATE esFlags);
     }
 }

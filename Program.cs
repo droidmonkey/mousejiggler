@@ -21,6 +21,7 @@ namespace ArkaneSystems.MouseJiggle
     {
         public static bool StartJiggling = false;
         public static bool StartMinimized = false;
+        public static bool StartScreenOn = false;
         public static int JiggleInterval = 1; // Minutes
 
         /// <summary>
@@ -41,6 +42,10 @@ namespace ArkaneSystems.MouseJiggle
                     if ((System.String.Compare(arg.ToUpperInvariant(), "--JIGGLE", System.StringComparison.Ordinal) == 0) ||
                         (System.String.Compare(arg.ToUpperInvariant(), "-J", System.StringComparison.Ordinal) == 0))
                         StartJiggling = true;
+
+                    if ((System.String.Compare(arg.ToUpperInvariant(), "--SCREEN", System.StringComparison.Ordinal) == 0) ||
+                        (System.String.Compare(arg.ToUpperInvariant(), "-S", System.StringComparison.Ordinal) == 0))
+                        StartScreenOn = true;
 
                     if (
                         (System.String.Compare(arg.ToUpperInvariant(), "--MINIMIZED", System.StringComparison.Ordinal) == 0) ||
